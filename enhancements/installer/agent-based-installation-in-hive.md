@@ -33,20 +33,37 @@ see-also:
 
 ## Summary
 
-The Assisted Installer currently runs as a SaaS on cloud.redhat.com, enabling
-users to deploy OpenShift clusters with certain customizations, particularly on
-bare metal hardware. It is necessary to bring those capabilities on-premise in
-users' "Hub" clusters by installing clusters via Multi-cluster management, such
-as through [Hive](https://github.com/openshift/hive/) and RHACM.
+This enhancement proposes a new installation workflow to Hive which
+will enable the deployment of OpenShift clusters on user-provisioned
+infrastructure, particularly on bare metal hardware.
 
-This enhancement proposes to add the agent-based installation workflow to Hive.
+We refer to this as an "agent-based installation workflow" because it
+begins with users booting their machines with a "discovery" image
+containing an installation agent.
 
 ## Motivation
 
+[Hive](https://github.com/openshift/hive/) is the kubernetes-native API for
+installing OpenShift. It currently supports an installation workflow
+based on OpenShift's installer-provisioned infrastructure installation
+workflow.
+
 The Assisted Installer running as a SaaS has demonstrated a new and valuable
-way to install OpenShift clusters through an agent-based flow. The [Assisted
-Installer for Connected Environments](connected-assisted-installer.md)
-enhancement proposal elaborates on the value of the agent-based installations.
+way to install OpenShift clusters through an agent-based flow. The
+[Assisted Installer for Connected
+Environments](connected-assisted-installer.md) enhancement proposal
+elaborates on the value of the agent-based installations. It
+describes:
+
+> The target user is someone wanting to deploy OpenShift, especially
+> on bare metal, with as little up-front infrastructure dependencies
+> as possible. This person has access to server hardware and wants to
+> run workloads quickly. They do not necessarily have the
+> administrative privileges to create private VLANs, configure
+> DHCP/PXE servers, or manage other aspects of the infrastructure
+> surrounding the hardware where the cluster will run. [They prefer]
+> to use their existing tools and processes for some or all of that
+> configuration.
 
 However many customers do not want a third party service running outside of
 their network to be able to provision hosts inside their network. Reasons
@@ -54,9 +71,9 @@ include trust, control, and reproducibility. Those users will prefer to run the
 service on-premises. There are also many customers whose network environments
 have limited or no connectivity to the internet.
 
-[Hive](https://github.com/openshift/hive/) is the kubernetes-native API for
-installing OpenShift, and it is the natural place to introduce an on-premises
-capability for agent-based cluster installation.
+Hive is the natural place to introduce a new multi-cluster,
+on-premises installation workflow. As such, this enhancement proposes
+exposing agent-based cluster installation capabilities via the Hive API.
 
 ### Goals
 
